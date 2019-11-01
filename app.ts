@@ -4,6 +4,7 @@ import {container} from 'tsyringe';
 import express from 'express';
 import bodyParser = require('body-parser');
 
+import {ApiController} from './controller/controller.interface';
 import {DemoController} from './controller/demo.controller';
 
 /**
@@ -28,11 +29,12 @@ app.use(bodyParser.json());
  * ToDo: Dependency Container
  */
 const registeredController = [
-    container.resolve(DemoController)
+    DemoController
 ];
 
-registeredController.forEach(contoller => {
-    app.use(contoller.defineRoutes(express.Router()))
+registeredController.forEach(controller => {
+    const instance = container.resolve(controller) as ApiController;
+    app.use(instance.defineRoutes(express.Router()))
 });
 
 /**

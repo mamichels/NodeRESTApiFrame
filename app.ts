@@ -1,9 +1,10 @@
-import express from 'express';
+import 'reflect-metadata';
+import {container} from 'tsyringe';
 
+import express from 'express';
 import bodyParser = require('body-parser');
-import DemoDao from './dao/demo.dao';
-import DemoDomain from './domain/demo.domain';
-import DemoController from './controller/demo.controller';
+
+import {DemoController} from './controller/demo.controller';
 
 /**
  * Defining the express app
@@ -23,20 +24,12 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 
 /**
- * Dependencies
- */
-const demoDao = new DemoDao();
-
-const demoDomain = new DemoDomain(demoDao);
-
-const demoController = new DemoController(demoDomain);
-
-/**
  * Register Controller and Routes
  * ToDo: Dependency Container
  */
-const registeredController = [];
-registeredController.push(demoController);
+const registeredController = [
+    container.resolve(DemoController)
+];
 
 registeredController.forEach(contoller => {
     app.use(contoller.defineRoutes(express.Router()))

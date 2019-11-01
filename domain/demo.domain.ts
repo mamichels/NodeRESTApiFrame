@@ -1,9 +1,12 @@
+import {injectable} from 'tsyringe';
+
+import {DemoDao} from '../dao/demo.dao';
 import ModelDto from '../dto/model.dto';
-import DemoDao from '../dao/demo.dao';
 
-export default class DemoDomain {
+@injectable()
+export class DemoDomain {
 
-    constructor(private readonly demoDao: DemoDao) {
+    constructor(private demoDao: DemoDao) {
     }
  
     public getAll(): Promise<ModelDto[]> {

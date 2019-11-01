@@ -1,8 +1,11 @@
-import ModelDto from '../dto/model.dto';
-import { db } from '../util/database.service';
+import { injectable } from 'tsyringe';
 import { ObjectID } from 'bson';
 
-export default class DemoDao {
+import { db } from '../util/database.service';
+import ModelDto from '../dto/model.dto';
+
+@injectable()
+export class DemoDao {
 
     constructor() {
     }

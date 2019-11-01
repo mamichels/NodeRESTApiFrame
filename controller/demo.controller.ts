@@ -1,8 +1,12 @@
-import { Router } from 'express';
-import DemoDomain from '../domain/demo.domain';
-import { ApiController } from './controller.interface';
+import {injectable} from "tsyringe";
+import {Router} from 'express';
 
-export default class DemoController implements ApiController {
+import {ApiController} from './controller.interface';
+
+import {DemoDomain} from '../domain/demo.domain';
+
+@injectable()
+export class DemoController implements ApiController {
 
     constructor(private readonly demoDomain: DemoDomain) {
     }
